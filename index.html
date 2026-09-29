@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Azhar Ali — Full-Stack Developer</title>
+<meta name="description" content="Azhar Ali — Full-Stack Developer building modern web applications." />
+<style>
+  :root {
+    --bg: #0b0b12;
+    --bg-2: #14141f;
+    --card: #1a1a28;
+    --text: #e8e8f0;
+    --muted: #9a9ab0;
+    --accent: #7c5cff;
+    --accent-2: #00d4ff;
+    --border: #26263a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(11,11,18,0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 1100px; margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .logo {
+    font-weight: 700; font-size: 1.2rem;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--muted); transition: color 0.3s; font-size: 0.95rem; }
+  .nav-links a:hover { color: var(--text); }
+  .menu-btn { display: none; background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 6rem 1.5rem 4rem;
+    position: relative;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 30%, rgba(124,92,255,0.15), transparent 60%);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; max-width: 800px; }
+  .badge {
+    display: inline-block; padding: 0.4rem 1rem;
+    background: rgba(124,92,255,0.15); border: 1px solid rgba(124,92,255,0.4);
+    border-radius: 999px; font-size: 0.85rem; color: var(--accent-2);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    line-height: 1.1; font-weight: 800; margin-bottom: 1rem;
+  }
+  .gradient-text {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p { color: var(--muted); font-size: 1.15rem; margin-bottom: 2rem; }
+  .buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    padding: 0.85rem 1.8rem; border-radius: 8px; font-weight: 600;
+    cursor: pointer; transition: all 0.3s; border: 1px solid transparent; font-size: 0.95rem;
+  }
+  .btn-primary {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    color: #fff;
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(124,92,255,0.4); }
+  .btn-outline { border-color: var(--border); color: var(--text); background: transparent; }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent-2); }
+
+  /* SECTIONS */
+  section { padding: 6rem 1.5rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-title {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    text-align: center; margin-bottom: 0.5rem; font-weight: 700;
+  }
+  .section-sub {
+    text-align: center; color: var(--muted); margin-bottom: 3.5rem;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: center;
+  }
+  .avatar {
+    width: 100%; aspect-ratio: 1; border-radius: 20px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 5rem; font-weight: 800; color: #fff;
+    box-shadow: 0 20px 50px rgba(124,92,255,0.3);
+  }
+  .about-text p { color: var(--muted); margin-bottom: 1rem; }
+  .skills { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+  .skill {
+    padding: 0.4rem 0.9rem; background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; font-size: 0.85rem; color: var(--muted);
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 1.8rem; transition: all 0.3s;
+    display: flex; flex-direction: column;
+  }
+  .project-card:hover {
+    transform: translateY(-6px); border-color: var(--accent);
+    box-shadow: 0 20px 40px rgba(124,92,255,0.15);
+  }
+  .project-icon {
+    width: 50px; height: 50px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; margin-bottom: 1.2rem;
+  }
+  .project-card h3 { margin-bottom: 0.6rem; font-size: 1.2rem; }
+  .project-card p { color: var(--muted); font-size: 0.95rem; flex: 1; margin-bottom: 1.2rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.2rem; }
+  .tag {
+    font-size: 0.75rem; padding: 0.25rem 0.7rem;
+    background: rgba(124,92,255,0.1); color: var(--accent-2);
+    border-radius: 999px;
+  }
+  .project-links { display: flex; gap: 1rem; font-size: 0.9rem; }
+  .project-links a { color: var(--accent-2); font-weight: 600; }
+  .project-links a:hover { text-decoration: underline; }
+
+  /* CONTACT */
+  .contact-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 20px; padding: 3rem; text-align: center; max-width: 600px; margin: 0 auto;
+  }
+  .contact-card p { color: var(--muted); margin-bottom: 2rem; }
+  .socials { display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; }
+  .socials a {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: var(--bg-2); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s; font-size: 1.2rem;
+  }
+  .socials a:hover { border-color: var(--accent); transform: translateY(-3px); }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 2rem 1.5rem;
+    color: var(--muted); font-size: 0.9rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* REVEAL ANIMATION */
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links {
+      position: fixed; top: 60px; right: 0; height: 100vh; width: 220px;
+      background: var(--bg-2); flex-direction: column; padding: 2rem;
+      transform: translateX(100%); transition: transform 0.3s;
+      border-left: 1px solid var(--border);
+    }
+    .nav-links.open { transform: translateX(0); }
+    .menu-btn { display: block; }
+    .about-grid { grid-template-columns: 1fr; }
+    .avatar { max-width: 250px; margin: 0 auto; }
+    .contact-card { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#home" class="logo">Azhar Ali</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="menu-btn" id="menuBtn">☰</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <span class="badge">👋 Welcome to my portfolio</span>
+    <h1>Hi, I'm <span class="gradient-text">Azhar Ali</span><br/>Full-Stack Developer</h1>
+    <p>I build complete web applications — from pixel-perfect frontends to robust backends. Passionate about clean code, great design, and continuous learning.</p>
+    <div class="buttons">
+      <a href="#projects" class="btn btn-primary">View My Work</a>
+      <a href="https://github.com/azharali331212-lgtm" target="_blank" rel="noopener" class="btn btn-outline">GitHub Profile</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <h2 class="section-title reveal">About Me</h2>
+    <p class="section-sub reveal">A little bit about who I am and what I do</p>
+    <div class="about-grid">
+      <div class="avatar reveal">AA</div>
+      <div class="about-text reveal">
+        <p>I'm <strong>Azhar Ali</strong>, a Full-Stack Developer who loves building end-to-end web applications. From designing responsive UIs to crafting scalable APIs and databases, I enjoy every layer of the stack.</p>
+        <p>I'm constantly learning new technologies and sharpening my skills. When I'm not coding, you'll find me exploring open-source projects or experimenting with new tools.</p>
+        <div class="skills">
+          <span class="skill">HTML</span>
+          <span class="skill">CSS</span>
+          <span class="skill">JavaScript</span>
+          <span class="skill">React</span>
+          <span class="skill">Node.js</span>
+          <span class="skill">Express</span>
+          <span class="skill">MongoDB</span>
+          <span class="skill">Git &amp; GitHub</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="background: var(--bg-2);">
+  <div class="container">
+    <h2 class="section-title reveal">Projects</h2>
+    <p class="section-sub reveal">Some of the things I've built</p>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-icon">🚀</div>
+        <h3>Project One</h3>
+        <p>A full-stack web application built from scratch — responsive UI, REST API, and database integration.</p>
+        <div class="tags"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">MongoDB</span></div>
+        <div class="project-links">
+          <a href="https://github.com/azharali331212-lgtm" target="_blank" rel="noopener">Code →</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-icon">🎨</div>
+        <h3>Project Two</h3>
+        <p>A modern web app with authentication, dynamic content, and a clean, user-friendly interface.</p>
+        <div class="tags"><span class="tag">JavaScript</span><span class="tag">Express</span><span class="tag">CSS</span></div>
+        <div class="project-links">
+          <a href="https://github.com/azharali331212-lgtm" target="_blank" rel="noopener">Code →</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-icon">📊</div>
+        <h3>Project Three</h3>
+        <p>An interactive dashboard that visualizes data with a responsive layout and smooth user experience.</p>
+        <div class="tags"><span class="tag">React</span><span class="tag">API</span><span class="tag">Chart.js</span></div>
+        <div class="project-links">
+          <a href="https://github.com/azharali331212-lgtm" target="_blank" rel="noopener">Code →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <h2 class="section-title reveal">Get In Touch</h2>
+    <p class="section-sub reveal">Let's work together</p>
+    <div class="contact-card reveal">
+      <p>I'm always open to new opportunities, collaborations, or just a friendly chat. Feel free to reach out!</p>
+      <a href="https://github.com/azharali331212-lgtm" target="_blank" rel="noopener" class="btn btn-primary">Connect on GitHub</a>
+      <div class="socials">
+        <a href="https://github.com/azharali331212-lgtm" target="_blank" rel="noopener" title="GitHub">🐙</a>
+        <a href="#" title="LinkedIn">💼</a>
+        <a href="#" title="Twitter">🐦</a>
+        <a href="mailto:azhar@example.com" title="Email">✉️</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Azhar Ali — Full-Stack Developer. Built with ❤️ and lots of coffee.</p>
+</footer>
+
+<script>
+  // Mobile menu toggle
+  const menuBtn = document.getElementById('menuBtn');
+  const navLinks = document.getElementById('navLinks');
+  menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => navLinks.classList.remove('open'))
+  );
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+          </html>
